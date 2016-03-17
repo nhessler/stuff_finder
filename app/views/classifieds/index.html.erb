@@ -3,14 +3,15 @@
 
 <section class="col-md-8">
   <% @classifieds.each do |classified| %>
-  <article class="well well-lg">
-    <h2><%= classified.title %></h2>
+    <article class="well well-lg">
+      <h2><%= classified.title %></h2>
 
-    <p><%= classified.description %></p>
+      <p><%= classified.description %></p>
 
-    <div><%= "$#{classified.price}" %></div>
-    <div><%= classified.category.name %></div>
-  </article>
+      <div><%= "$#{classified.price}" %></div>
+      <div><%= classified.category.name %></div>
+      <img src='<%= classified.image.url %>'>
+    </article>
   <% end %>
 </section>
 
