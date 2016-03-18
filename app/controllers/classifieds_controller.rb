@@ -1,4 +1,5 @@
 class ClassifiedsController < ApplicationController
+  before_filter :authenticate_user!, only: [ :new, :create ]
 
   def index
     @classifieds = Classified.all
@@ -11,7 +12,7 @@ class ClassifiedsController < ApplicationController
   end
 
   def create
-    @classified = Classified.new(safe_classified_params)
+    @classified = current_user.classifieds.build(safe_classified_params)
     @classified.build_category(safe_category_params)
 
     if @classified.save
@@ -19,6 +20,19 @@ class ClassifiedsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def destroy
+    @classified = current_user.classifieds.find(params[:id])
+    @classified.destroy
+
+    redirect_to my_classifieds_path
+  end
+
+  def my
+    @classifieds = current_user.classifieds
+
+    render 'index'
   end
 
   private
